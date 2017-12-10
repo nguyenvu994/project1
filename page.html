@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Project</title>
+        <style>
+            body
+            {
+                font-family: sans-serif;
+                font-size: 12pt;
+                background: url("pic1.jpg") no-repeat center center fixed; 
+                -webkit-background-size: cover;
+                -moz-background-size: cover;
+                -o-background-size: cover;
+                background-size: cover;
+        
+            }
+
+            table,th,td
+            {
+                border: 1px solid black;
+                border-collapse: collapse;
+                opacity: 0.95;
+            }
+            th, td
+            {
+                padding: 10px;
+                text-align: center;
+            }
+            th
+            {
+                background-color: #bc0b0e;
+                color: white;
+            }
+            tr:nth-child(even)
+            {
+                background-color: #e8e8e8;
+            }
+            tr:nth-child(odd)
+            {
+                background-color: white;
+            }
+            #head
+            {
+                background-color: #6687e2;
+                color: white;
+            }
+            .container{overflow: hidden}
+            .tab {float: left;}
+            .tab-2 
+            {
+                margin-left: 50px;
+                color: #68e51b;
+            }
+            .tab-2 input {display: block;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class = "tab tab-1">
+                <table id="table">
+                    <tr>
+                        <td id="head" colspan="10"><h1>Member List</h1></td>
+                    </tr>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Red ID</th>
+                        <th>GPA</th>
+                        <th>Address</th>
+                    </tr>
+                    <tr>
+                        <td>Nguyen</td>
+                        <td>Vu</td>
+                        <td>81872372372</td>
+                        <td>1.2</td>
+                        <td>123 Mainstreet sanDiego CA 91219</td>
+                    </tr>
+                    <tr>
+                        <td>John</td>
+                        <td>Doe</td>
+                        <td>23</td>
+                        <td>2.2</td>
+                        <td>123 Mainstreet sanDiego CA 91219</td>
+                    </tr>
+                </table>
+            </div>    
+            <div class = "tab tab-2">
+              
+                First name:
+                <input type="text" name="fname" id ="fname">
+                Last name:
+                <input type="text" name="lname" id ="lname">
+                RED ID:
+                <input type="text" name="id" id = "id">
+                GPA:
+                <input type="text" name="gpa" id="gpa">
+                Street Number:
+                <input type="text" class="address" name="snum" id="snum">
+                Street Name:
+                <input type="text" class="address" name="sname" id="sname">
+                City:
+                <input type="text" class="address" name="city" id="city">
+                State:
+                <input type="text" class="address" name="state" id="state">
+                Zipcode
+                <input type="text" class="address" name="zip" id="zip"><br>
+                <button onclick="addButton()">ADD</button>
+                <button onclick="Edit()">UPDATE</button>
+                <button onclick="removeR()">REMOVE</button> 
+                
+            </div>
+        </div>
+        <script>
+            var names = '';
+            var elements = document.getElementsByClassName("address");
+            var ide,table = document.getElementById("table");
+
+            function addButton()
+            {
+                
+                var createNewRow = table.insertRow(table.length),
+                block0 = createNewRow.insertCell(0),
+                block1 = createNewRow.insertCell(1),
+                block2 = createNewRow.insertCell(2),
+                block3 = createNewRow.insertCell(3),
+                block4 = createNewRow.insertCell(4),
+                fname = document.getElementById("fname").value,
+                lname = document.getElementById("lname").value,
+                id = document.getElementById("id").value,
+                gpa = document.getElementById("gpa").value;
+               // var elements = document.getElementsByClassName("address");
+                    
+                for(var i=0; i<elements.length; i++) 
+                    {
+                        names += elements[i].value;
+                        names += " ";
+                    }
+            
+                block0.innerHTML = fname;
+                block1.innerHTML = lname;
+                block2.innerHTML = id;
+                block3.innerHTML = gpa;
+                block4.innerHTML = names;
+                names = '';
+                removeHelper();
+              
+            }
+            console.log(names);
+             function removeHelper()
+            {
+                var helper = '';
+                
+                for(var i = 1; i < table.rows.length; i++)
+                {
+                    table.rows[i].onclick = function()
+                    {
+                        ide = this.rowIndex;
+                        document.getElementById("fname").value = this.cells[0].innerHTML;
+                        document.getElementById("lname").value = this.cells[1].innerHTML;
+                        document.getElementById("id").value = this.cells[2].innerHTML;
+                        document.getElementById("gpa").value = this.cells[3].innerHTML;
+                        helper = this.cells[4].innerHTML;
+                        var helper2 = helper.split(" ");
+                        document.getElementById("snum").value = helper2[0];
+                        document.getElementById("sname").value = helper2[1];
+                        document.getElementById("city").value = helper2[2];
+                        document.getElementById("state").value = helper2[3];
+                        document.getElementById("zip").value = helper2[4];
+                        
+                        
+                        
+                    };
+                }
+            }
+            removeHelper();
+
+            function removeR()
+            {
+                
+                table.deleteRow(ide);
+                document.getElementById("fname").value = "";
+                document.getElementById("lname").value = "";
+                document.getElementById("id").value = "";
+                document.getElementById("gpa").value = "";
+                document.getElementById("snum").value = "";
+                document.getElementById("sname").value = "";
+                document.getElementById("city").value = "";
+                document.getElementById("state").value = "";
+                document.getElementById("zip").value = "";
+                
+            }
+            function Edit()
+            {
+                var fname = document.getElementById("fname").value,
+                    lname = document.getElementById("lname").value,
+                    redID = document.getElementById("id").value,
+                    gpa = document.getElementById("gpa").value;
+                for(var i=0; i<elements.length; i++) 
+                    {
+                        names += elements[i].value;
+                        names += " ";
+                    }
+                table.rows[ide].cells[0].innerHTML = fname;
+                table.rows[ide].cells[1].innerHTML = lname;
+                table.rows[ide].cells[2].innerHTML = redID;
+                table.rows[ide].cells[3].innerHTML = gpa;
+                table.rows[ide].cells[4].innerHTML = names;
+                names= '';
+              
+            }
+        </script>
+    </body>
+</html>
